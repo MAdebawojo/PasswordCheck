@@ -3,6 +3,7 @@
 //for the hash
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.util.Scanner;
 
 public class PasswordHash 
 {
@@ -11,8 +12,25 @@ public class PasswordHash
 
 	public String generateHash() 
 	{
-		PasswordGenerator obj = new PasswordGenerator(); // created an object of class PasswordGenerator
-		String password = obj.generateRandomPassword(30);
+		String password = null;
+		System.out.println("Enter 1 to Enter a Password or 2 to Generate a Random Password: ");
+		Scanner sc = new Scanner(System.in);
+		int option = sc.nextInt();
+		switch(option)
+		{
+			case 1:
+				System.out.println("Enter Password: ");
+				sc.nextLine();
+				password = sc.nextLine();
+				System.out.println("My password is: " + password);
+				break;
+			case 2:
+				System.out.println("Enter the password length: ");
+				int len = sc.nextInt();
+				PasswordGenerator obj = new PasswordGenerator(); // created an object of class PasswordGenerator
+				password = obj.generateRandomPassword(len);
+		}
+		
 
 		try 
 		{
@@ -20,6 +38,7 @@ public class PasswordHash
 			digest.reset();
 			digest.update(password.getBytes("utf8"));
 			sha1 = String.format("%040x", new BigInteger(1, digest.digest()));
+			System.out.println(sha1);
 		} 
 		catch (Exception e) 
 		{
